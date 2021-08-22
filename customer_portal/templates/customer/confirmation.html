@@ -1,0 +1,48 @@
+{% extends 'customer/base.html' %}
+{% block content %}
+
+<div class="w3-bar w3-large w3-black">
+  <div class="w3-bar-item w3-left w3-black">Welcome: {{user.username}}</div>
+  <a class="w3-bar-item w3-btn w3-black w3-right" href="/customer_portal/logout/">Logout</a>
+  <a class="w3-bar-item w3-btn w3-black w3-right" href="/customer_portal/manage/">Manage</a>
+  <a class="w3-ber-item w3-btn w3-green w3-right" href="/customer_portal/search/">Search for cars</a>
+</div>
+<div class="w3-containet w3-center" style="padding:100px  ">
+name : {{vehicle.car_name}}
+<form class="w3-container" action="/customer_portal/confirmed/" method="post">
+  {% csrf_token %}
+  Price : {{cost_per_day}} / day<br><br>Hello
+  <lable>For How many days ?</lable> : 
+  <input type="date" id="days1" required> to <input type="date" id="days2" required>
+  <br><br>
+  <button type="button" class="btn btn-primary" onclick="findDiff()"> Calculate</button>
+
+  <br>
+  <br>
+  <h3>Your riding Days  <input readonly id="ans"></h3>
+  <input hidden id="days" name="days" readonly>
+  <input class="w3-btn w3-green" type="submit" value="confirm order"><br><br>
+  <input type="hidden" value="{{vehicle.id}}" name="id">
+  <br><br>
+</form>
+
+
+</div>
+
+<script>
+  function findDiff(){
+  let ans = document.getElementById("ans")
+  var dob1= document.getElementById("days1").value;
+  var dob2= document.getElementById("days2").value;
+  var date1 = new Date(dob1);
+  var date2=new Date(dob2);
+  let days = document.getElementById("days")
+  var ONE_DAY = 1000 * 60 * 60 * 24
+  var d1 = date1.getTime()
+  var d2 = date2.getTime()
+  var diff = Math.abs(d2 - d1)
+  days.value= Math.round(diff/ONE_DAY);
+ans.value=Math.round(diff/ONE_DAY);
+  };
+  </script>
+{% endblock %}

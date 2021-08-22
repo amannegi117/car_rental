@@ -1,0 +1,77 @@
+{% load static %}
+<html>
+
+<head>
+  <title>Online Car Rental System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+
+<body style="background-image: url(/static/images/c2.jpg);">
+  <div class="w3-container " style="    background: #e0edfb;
+  opacity: 0.7;">
+    <h1 class="w3-center" style="font-style: italic;">Online Car Rental System<h1>
+  </div><br>
+
+  <!-- <center>
+    <h1 class="slide" style="font-size: 2rem;    font-size: 2rem; color: aliceblue;font-weight: 900;font-family: cursive;">Book You Ride Today !</h1>
+  </center> -->
+  <div style="display:flex; padding-left: 350px">
+    <div >
+
+      <form class="w3-container w3-center" action="/customer_portal/login/" mehtod="POST">{% csrf_token %}
+        <input class="btn btn-success" style=" box-shadow: 7px 1px 3px 1px #848181;"type="submit" value="Customer Login">
+      </form>
+    </div>
+    <h1 class="slide" style="    font-size: 3rem;
+    color: aliceblue;
+    font-weight: 900;
+    font-family: cursive;
+    text-shadow: 5px 1px 7px black; padding-left: 90px;padding-right: 90px;">Welcome !</h1>
+    <div>
+      <form class="w3-container w3-center" action="/car_dealer_portal/login/" method="POST">{% csrf_token %}
+        <input class="btn btn-primary" style="    box-shadow: 7px 1px 3px 1px #848181;" type="submit" value="Admin Login">
+        <form>
+    </div>
+  </div>
+  <div class="w3-center" style="padding:100px;">
+    <table border="1" style="box-shadow: 19px 0px 14px 0px #676060;" class="w3-table w3-striped w3-center w3-large">
+      <tr>
+        <th> Car</th>
+        <th>Model_Number</th>
+        <th>Capacity</th>
+        <th>Rent</th>
+        <th>Pincode</th>
+
+      </tr>
+      {% for vehicle in cars %}
+
+      <tr>
+        <td style="padding:20"> {{vehicle.car_name}}</td>
+        <td style="padding:20">{{vehicle.vehichle_number}}</td>
+        <td style="padding:20">{{vehicle.capacity}}</td>
+        <td style="padding:20">Rs {{vehicle.rent}}</td>
+        <td style="padding:20">{{vehicle.area.pincode}}</td>
+
+        <td style="padding:20">
+          <form action="/customer_portal/rent/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{vehicle.id}}">
+
+            <input class="w3-btn w3-green" type="submit" value="rent">
+          </form>
+
+        </td style="padding:20">
+      </tr>
+
+      {% endfor %}
+    </table>
+  </div>
+
+
+
+  <body>
+
+</html>
